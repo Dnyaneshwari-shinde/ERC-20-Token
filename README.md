@@ -10,8 +10,8 @@ It generates an ERC20 Token which is deployed on the sepolia testnet: https://se
 # Setting Up
 1. Clone/Download the Repository
 2. Install Dependencies:
-$ cd ERC-20 Token
-$ npm install
+<pre> ```bash cd ERC-20 Token  ``` </pre>
+<pre> ```bash npm install ``` </pre>
 3. Boot up local development blockchain
 $ cd ERC-20 Token
 $ npx hardhat node
