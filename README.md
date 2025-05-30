@@ -10,13 +10,13 @@ It generates an ERC20 Token which is deployed on the sepolia testnet: https://se
 # Setting Up
 1. Clone/Download the Repository
 2. Install Dependencies:
-<pre> ```bash cd ERC-20 Token  ``` </pre>
-<pre> ```bash npm install ``` </pre>
+<pre> cd ERC-20 Token</pre>
+<pre> npm install </pre>
 3. Boot up local development blockchain
-$ cd ERC-20 Token
-$ npx hardhat node
+<pre> cd ERC-20 Token </pre>
+<pre> npx hardhat node </pre>
 4. Migrate Smart Contracts
-npx hardhat run scripts/deploy.js --network localhost
+<pre>npx hardhat run scripts/deploy.js --network localhost</pre>
 
 6. Run Tests
 $ npx hardhat help
