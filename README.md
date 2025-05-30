@@ -19,8 +19,8 @@ It generates an ERC20 Token which is deployed on the sepolia testnet: https://se
 <pre>npx hardhat run scripts/deploy.js --network localhost</pre>
 
 6. Run Tests
-$ npx hardhat help
-$ npx hardhat test
-$ GAS_REPORT=true npx hardhat test
-$ npx hardhat node
-$ npx hardhat run scripts/deploy.js
+<pre> npx hardhat help </pre>
+<pre> npx hardhat test </pre>
+<pre> GAS_REPORT=true npx hardhat test </pre>
+<pre> npx hardhat node </pre>
+<pre> npx hardhat run scripts/deploy.js </pre>
