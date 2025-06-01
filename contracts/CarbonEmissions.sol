@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+
 error NotOwner();
 error ZeroAddress();
 error InsufficientBalance(uint256 available, uint256 required);
@@ -51,6 +53,7 @@ contract Ownable {
 }
 
 contract CarbonEmissions is IBEP20, Ownable {
+ using SafeMath for uint256;
  
  mapping (address => uint256) private _balances;
  mapping (address => mapping (address => uint256)) private _allowances;
@@ -100,33 +103,34 @@ contract CarbonEmissions is IBEP20, Ownable {
  }
  function transferFrom(address sender, address recipient, uint256 amount) public returns (bool) {
    _transfer(sender, recipient, amount);
-   _approve(sender, msg.sender, _allowances[sender][msg.sender] - amount);
+   _approve(sender, msg.sender, _allowances[sender][msg.sender].sub(amount));
    return true;
  }
  function increaseAllowance(address spender, uint256 addedValue) public returns (bool success) {
-   _approve(msg.sender, spender, _allowances[msg.sender][spender] + addedValue);
+   _approve(msg.sender, spender, _allowances[msg.sender][spender].add(addedValue));
    return true;
  }
  function decreaseAllowance(address spender, uint256 subtractedValue) public returns (bool success) {
-   _approve(msg.sender, spender, _allowances[msg.sender][spender] - subtractedValue);
+   _approve(msg.sender, spender, _allowances[msg.sender][spender].sub(subtractedValue));
    return true;
  }
 
- function _transfer(address sender, address recipient, uint256 amount) internal {
+function _transfer(address sender, address recipient, uint256 amount) internal {
     if (sender == address(0)) revert ZeroAddress();
     if (recipient == address(0)) revert ZeroAddress();
     if (_balances[sender] < amount) revert InsufficientBalance(_balances[sender], amount);
 
-    _balances[sender] -= amount;
-    _balances[recipient] += amount;
+    _balances[sender] = _balances[sender].sub(amount);
+    _balances[recipient] = _balances[recipient].add(amount);
     emit Transfer(sender, recipient, amount);
- }
+}
+
 
  function _mint(address account, uint256 amount) internal {
    if (account == address(0)) revert ZeroAddress();
 
-   _totalSupply = _totalSupply + amount;
-   _balances[account] = _balances[account] + amount;
+   _totalSupply = _totalSupply.add(amount);
+   _balances[account] = _balances[account].add(amount);
    emit Transfer(address(0), account, amount);
  }
  
