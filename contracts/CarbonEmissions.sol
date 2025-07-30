@@ -26,30 +26,25 @@ interface IBEP20 {
 }
 
 contract Ownable {
- address public _owner;
+    address public _owner;
 
- event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
- constructor() {
-   _owner = msg.sender;
-   emit OwnershipTransferred(address(0), msg.sender);
- }
+    constructor() {
+        _owner = msg.sender;
+        emit OwnershipTransferred(address(0), msg.sender);
+    }
 
- modifier onlyOwner() {
-   if (msg.sender != _owner) revert NotOwner();
-   _;
- }
+    modifier onlyOwner() {
+        if (msg.sender != _owner) revert NotOwner();
+        _;
+    }
 
- function transferOwnership(address newOwner) public onlyOwner {
-   _transferOwnership(newOwner);
- }
-
- function _transferOwnership(address newOwner) internal {
-   if (msg.sender != _owner) revert NotOwner();
-   emit OwnershipTransferred(_owner, newOwner);
-   _owner = newOwner;
- }
-
+    function transferOwnership(address newOwner) public onlyOwner {
+        if (newOwner == address(0)) revert ZeroAddress();
+        emit OwnershipTransferred(_owner, newOwner);
+        _owner = newOwner;
+    }
 }
 
 contract CarbonEmissions is IBEP20, Ownable {
