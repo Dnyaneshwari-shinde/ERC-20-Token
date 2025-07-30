@@ -58,13 +58,14 @@ contract CarbonEmissions is IBEP20, Ownable {
  string private _symbol;
  string private _name;
 
- constructor(){
+ constructor(address owner) {
    _name = "CarbonEmissions";
    _symbol = "CMS";
    _decimals = 18;
    _totalSupply = 1000000000 * 10 ** _decimals;
    _balances[msg.sender] = _totalSupply;
-   emit Transfer(address(0), msg.sender, _totalSupply);
+   _owner = owner;
+   emit Transfer(address(0), _owner, _totalSupply);
  }
 
  function getOwner() external view returns (address) {
